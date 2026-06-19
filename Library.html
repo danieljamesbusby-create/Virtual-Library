@@ -10,7 +10,65 @@
 
 <body>
 
-    <p> Hello World! </p>
+<div id="search-bar">
+<h1>Babylon</h1>
+<button id="new-book">+</button>
+</div>
+
+<div id="new-book-modal">
+    <form class="modal-inner">
+
+      <div class="header">
+      <p class="title">Add Book</p>
+      <button id="close-modal">x</button>
+      </div>
+ 
+        <label for="b-name"><input type="text" name="b-name" id="b-name" required><span>Book Name</span></label>
+       
+     
+
+     
+        <label for="b-author">   <input type="text" name="b-author" id="b-author" required><span>Author</span></label>
+     
+ 
+
+ 
+        <label for="b-pages"> <input type="number" name="b-pages" id="b-pages" required><span>Pages</span></label>
+       
+
+
+   
+        <div class="toggle-container">
+
+          <span id="Book-Completed">Book Completed:</span>
+      
+          <label for="toggleBtn">
+      
+              <input type="checkbox" id="toggleBtn">
+      
+              <div class="toggler">
+      
+                  <div class="cross">✕</div>
+      
+                  <div class="tick">✓</div>
+      
+                  <div class="togglerSlider"></div>
+      
+              </div>
+      
+          </label>
+
+          <button id="submit" type="submit">Add To Shelf</button>
+      
+      </div>
+        
+ 
+
+     
+   </form>
+</div>
+
+<div id="content-bar"></div>
 
 
     

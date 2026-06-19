@@ -1,3 +1,372 @@
-p {
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin:0;
+    padding: 0;
+}
+
+:root {
+    --dark-text:rgb(65, 69, 81);
+    --light-text:rgb(130, 132, 144);
+    --dusty-sand: #8594e4;
+    --dusty-white: #e5eaf5;
+    --medium-purple: #d0bdf4;
+    --heavy-purple: #a28089;
+}
+
+#search-bar h1 {
+    font-family: 'Rubik';
+    color: var(--dusty-white);
+    text-shadow: 0px 1px 2px rgb(0 0 0 / 0.1), 0px 3px 2px rgb(0 0 0 / 0.1), 0px 4px 8px rgb(0 0 0 / 0.1)
+
+}
+
+
+body {
+    display: grid;
+    grid-template-rows: max-content 100vh;
+}
+
+
+#search-bar {
+    background-color: var(--dusty-sand);
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+
+
+
+}
+#new-book {
+    border: none;
+    outline: none;
+    font-size: 1.8rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--dusty-white);
+    background: var(--dusty-sand);
+    position:fixed;
+    transition: all 0.4s;
+    bottom: 5%;
+    right: 5%;
+ }
+
+ #new-book:hover {
+    width: 55px;
+    height: 55px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.025);
+  outline: 2px solid lightblue;
+    transition: all 0.4s;
+ }
+
+ /* Checkbox Slider */
+
+
+
+.toggler {
+    display: block;
+    height: 50px;
+    width: 100px;
+    background-color: rgb(238, 176, 176);
+    border-radius: 25px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.5s;
+    justify-self: center;
+    padding-bottom: 20px;
+
+}
+
+
+#toggleBtn {
+    padding-top: 10px;
+}
+
+#toggleBtn span {
+   
+   text-align: center;
+   text-justify: center
+   ;
+}
+
+.cross, .tick {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background-color: transparent;
+    /* border: 1px solid red; */
+    border-radius: 50%;
+    font-size: 1.6rem;
+    position: absolute;
+}
+.tick {
+    color: green;
+    left: 2px;
+    top: 2px;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.cross {
     color: red;
+    right: 2px;
+    top: 2px;
+    opacity: 1;
+    transition: opacity 0.5s;
+}
+.togglerSlider {
+    display: block;
+    height: 44px;
+    width: 44px;
+    background-color: rgb(90, 95, 95);
+    border-radius: 50%;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    z-index: 5;
+    transition: left 0.5s;
+}
+
+/* Checked Actions */
+#toggleBtn:checked + .toggler .togglerSlider {
+    left: 53px;
+}
+#toggleBtn:checked + .toggler {
+    background-color: rgb(190, 241, 196);
+}
+#toggleBtn:checked + .toggler .tick {
+    opacity: 1;
+}
+#toggleBtn:checked + .toggler .cross {
+    opacity: 0;
+}
+#toggleBtn {
+    appearance: none;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+#submit {
+    display: flex;
+    width: 110px;
+    height: 40px;
+    align-self: center;
+    justify-self: center;
+    
+
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+
+    font-family: 'Rubik';
+    font-style: bold;
+    font-weight: 600;
+    
+    cursor: pointer;
+    background-color: rgb(34, 33, 33);
+    color: white;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#submit:hover {
+    transition: all 0.3s;
+
+ box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.025);
+  outline: 2px solid lightblue;
+  
+}
+
+
+
+
+
+ #new-book-modal {
+    background-color: rgba(123, 2, 2, 0.5);
+    opacity: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: all 0.3s ease-in-out;
+    z-index: -1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
+ }
+
+ #new-book-modal.open {
+    opacity: 1;
+    z-index: 999;
+ }
+
+ .modal-inner {
+    background-color: var(--dusty-white);
+    font-family: 'Rubik';
+
+    width: 380px;
+    height: fit-content;
+    padding: 20px;
+    border-radius: 10px;
+    gap: 10px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+ }
+
+ .title {
+    font-size: 28px;
+    color: black;
+ }
+
+ .modal-inner label {
+    position: relative;
+    width: 100%;
+ }
+
+.modal-inner label input {
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    height: 3em;
+    padding-left:10px;
+
+ }
+
+ .modal-inner label input + span {
+    position: absolute;
+    left: 10px;
+    top: 12.5px;
+    font-size: 0.9em;
+    cursor: text;
+    transition: all 0.3s ease;
+
+ }
+
+.modal-inner label input:placeholder-shown + span {
+    top: 12.5px;
+    font-size: 0.9em;
+}
+ 
+.modal-inner label input:focus + span,
+.modal-inner label input:valid +span{
+    top: 27px;
+    font-size: 0.7em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.modal-inner label input:valid +span {
+    color: #1ab188;
+}
+
+#toggleBtn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: fit-content;
+    
+}
+
+#Book-Completed {
+
+    text-align: center;
+
+    width: auto;
+
+    font-weight: 500;
+
+    padding-bottom: 10px;
+
+}
+
+
+
+
+
+
+
+
+
+
+ #close-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 5px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: var(--dusty-white);
+    background: var(--dusty-sand);
+    transition: all 0.4s;
+    bottom: 5%;
+    right: 5%;
+ }
+
+ #close-modal:hover {
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.025);
+  outline: 2px solid lightblue;
+    transition: all 0.4s;
+    color: darkred;
+   
+ }
+
+
+
+
+#content-bar {
+    background-color: var(--medium-purple);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: max-content;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 30px;
+    gap:  20px;
+}
+
+.book-info {
+    display: grid;
+    color: var(--dusty-white);
+    background-color: var(--dusty-sand);
+    border-radius: 8px;
+    gap: 5px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    transition: all 0.4s;
+}
+
+.book-info:hover {
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.025);
+  outline: 2px solid lightblue;
+  transition: all 0.4s
+
 }
