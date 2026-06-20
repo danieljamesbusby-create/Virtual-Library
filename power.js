@@ -15,6 +15,10 @@ function addBookToLibrary(title, author, pages,read) { // function to create a n
     myLibrary.push(newBook)
 }
 
+Book.prototype.ToggleRead = function() {
+  this.read = !this.read;
+}
+
 addBookToLibrary("The Brothers Karamazov", "Dostoyevskey", "800", true) // List of starter books to test functionality // 
 addBookToLibrary("1984", "George Orwell", "250", false)
 addBookToLibrary("1984", "George Orwell", "250", false)
@@ -26,56 +30,144 @@ addBookToLibrary("1984", "George Orwell", "250", false)
   const contentBar = document.getElementById("content-bar"); // DOM Manipulation - Selects the content portion of the HTML to later input the library books //
  contentBar.textContent = ``;
 
+ function removeBook(id) { 
+
+  const index = myLibrary.findIndex(book => book.id === id);
+
+  if (index !== -1) {
+
+    myLibrary.splice(index, 1);
+
+  }
+
+  renderLibrary();
+
+}
+
 myLibrary.forEach((book) => { // .forEach loop that goes through the array objects individually and creates all of the card elements and appends them to the html // 
+
   // Adds div shell to HTML //
+
   const bookElement = document.createElement(`div`);
   bookElement.classList.add('book-info');
+
   // Adds book title //
+
   const bookTitle = document.createElement(`h1`);
   bookTitle.textContent = `${book.title}`;
   bookElement.appendChild(bookTitle)
   // Adds book Author //
+
   const bookAuthor = document.createElement(`p`);
   bookAuthor.textContent = `${book.author}`;
   bookElement.appendChild(bookAuthor)
+
   // Adds book pages //
+
   const bookPages = document.createElement(`p`);
   bookPages.textContent = `${book.pages} Pages`;
   bookElement.appendChild(bookPages)
+
   // Adds read indicator //
+
   const bookRead = document.createElement(`p`);
-  bookRead.textContent = `${book.read}`;
+  bookRead.textContent = book.read ? "Read" : "Unfinished";
   bookElement.appendChild(bookRead);
+
+  // Adds Toggle Read Button //
+
+  const bookToggleRead = document.createElement(`button`)
+  bookToggleRead.textContent = `Toggle Status`
+  bookToggleRead.style.width = `fit-content`
+  bookToggleRead.style.justifySelf = `center`
+  bookToggleRead.style.padding = `5px`
+  bookToggleRead.style.fontFamily = `Rubik`
+  bookToggleRead.style.fontWeight = `600`
+  bookToggleRead.style.borderRadius = `5px`
+  bookToggleRead.style.color = `rgb(34, 33, 33)`
+  bookToggleRead.style.cursor = `pointer`
+  bookToggleRead.dataset.id = book.id
+  bookToggleRead.addEventListener("click", () => {
+
+    book.ToggleRead();
+  
+    renderLibrary();
+  
+  });
+
+  bookElement.appendChild(bookToggleRead)
+
+  // Adding close button //
+  const bookDelete = document.createElement(`button`)
+  bookDelete.textContent = `Remove`
+  bookDelete.style.width = `fit-content`
+  bookDelete.style.justifySelf = `center`
+  bookDelete.style.padding = `5px`
+  bookDelete.style.fontFamily = `Rubik`
+  bookDelete.style.fontWeight = `600`
+  bookDelete.style.color = `white`
+  bookDelete.style.borderRadius = `5px`
+  bookDelete.style.backgroundColor = `rgb(34, 33, 33)`
+  bookDelete.style.cursor = `pointer`
+  bookDelete.dataset.id = book.id;
+  bookDelete.addEventListener("click", () => {
+
+    removeBook(book.id);
+  
+  });
+
+  bookElement.appendChild(bookDelete)
+  
+ 
 
   bookElement.style.textAlign = `center`
   bookElement.style.color = '--medium-purple'
 
   contentBar.appendChild(bookElement)
+
+  
+  
 })}
 
 renderLibrary()
 
+
+// DOM Manipulation to select the 'Modal' 
 const openButton = document.getElementById("new-book")
 const closeButton = document.getElementById("close-modal")
 const formModal = document.getElementById("new-book-modal")
 
-
+// DOM Manipulation to allow the Modal pop-up to become visible
 openButton.addEventListener("click", () => {
   formModal.classList.add("open");
 })
 
+// DOM Manipulation to allow the Modal pop-up to become invisible
 closeButton.addEventListener("click", () => {
   formModal.classList.remove("open");
+  form.reset()
 })
 
+// DOM Manipulation to select the form 
 const form = document.querySelector(".modal-inner");
 
 // Extracts form data and appends to Library & page 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const data = new FormData(e.target);
-  const entries = Object.fromEntries(data.entries());
-  addBookToLibrary(entries.title, entries.author, entries.pages, entries.read);
-  renderLibrary()
+form.addEventListener("submit", (e) => { // Upon clicking the 'select button' 
+  e.preventDefault(); // Prevents page refresh
+  const data = new FormData(e.target); // Grabs the form data from the form 
+  const entries = Object.fromEntries(data.entries()); // Takes the data and turns it into an Object
+  addBookToLibrary(entries.title, entries.author, entries.pages, entries.read); // Takes the Object items and passes them into the 'addBooktoLibrary' function
+  renderLibrary() // Renders the Library with the newly added book
+  form.reset()
 });
 
+
+const submitButton = document.getElementById("submit")
+const formReset = document.getElementById("form").reset();
+
+
+ submitButton.addEventListener("click", () => {
+  formModal.classList.remove("open");
+  
+
+ })
