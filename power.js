@@ -1,6 +1,9 @@
 const myLibrary = [] // Created the Empty array for the initial library //
 
-const addBook = document.querySelector("#new-book");
+const addBook = document.querySelector("#new-book"); 
+
+
+// Project Methods / Functions that allow for overall functionality //
 
 function Book(title, author, pages, read) {  // The intial book object constructor // 
     this.id = crypto.randomUUID();
@@ -10,27 +13,24 @@ function Book(title, author, pages, read) {  // The intial book object construct
     this.read = read;
   }
 
-function addBookToLibrary(title, author, pages,read) { // function to create a new book object that is then added to the library array //
+function addBookToLibrary(title, author, pages,read) { // function to create a new book object that is then added to the library array through the .push method //
     const newBook = new Book(title, author, pages, read )
     myLibrary.push(newBook)
 }
 
-Book.prototype.ToggleRead = function() {
+Book.prototype.ToggleRead = function() { // A simple prototypal method that allows for the 'read' variable to be toggled -> quite literally means ' reverse status ' //
   this.read = !this.read;
 }
 
 addBookToLibrary("The Brothers Karamazov", "Dostoyevskey", "800", true) // List of starter books to test functionality // 
 addBookToLibrary("1984", "George Orwell", "250", false)
-addBookToLibrary("1984", "George Orwell", "250", false)
-addBookToLibrary("1984", "George Orwell", "250", false)
-addBookToLibrary("1984", "George Orwell", "250", false)
-addBookToLibrary("1984", "George Orwell", "250", false)
 
- function renderLibrary() {
+
+ function renderLibrary() {  // Creates the initial render function that is one of the backbones of this entire project //
   const contentBar = document.getElementById("content-bar"); // DOM Manipulation - Selects the content portion of the HTML to later input the library books //
  contentBar.textContent = ``;
 
- function removeBook(id) { 
+ function removeBook(id) {  // creates the function for removing a book from the myLibrary array using its unique ID & the .splice method -> then re-rendering the library //
 
   const index = myLibrary.findIndex(book => book.id === id);
 
@@ -44,12 +44,14 @@ addBookToLibrary("1984", "George Orwell", "250", false)
 
 }
 
+// DOM Manipaltion that creates the myLibrary array on the page with the functionality from the above methods //
+
 myLibrary.forEach((book) => { // .forEach loop that goes through the array objects individually and creates all of the card elements and appends them to the html // 
 
   // Adds div shell to HTML //
 
   const bookElement = document.createElement(`div`);
-  bookElement.classList.add('book-info');
+  bookElement.classList.add('book-info'); 
 
   // Adds book title //
 
@@ -71,12 +73,12 @@ myLibrary.forEach((book) => { // .forEach loop that goes through the array objec
   // Adds read indicator //
 
   const bookRead = document.createElement(`p`);
-  bookRead.textContent = book.read ? "Read" : "Unfinished";
+  bookRead.textContent = book.read ? "Read" : "Unfinished"; // This simple logic alows for the read textcontent to be changed depending on the boolean value selected //
   bookElement.appendChild(bookRead);
 
   // Adds Toggle Read Button //
 
-  const bookToggleRead = document.createElement(`button`)
+  const bookToggleRead = document.createElement(`button`) // These buttons were styled using DOM manipulation //
   bookToggleRead.textContent = `Toggle Status`
   bookToggleRead.style.width = `fit-content`
   bookToggleRead.style.justifySelf = `center`
@@ -86,12 +88,12 @@ myLibrary.forEach((book) => { // .forEach loop that goes through the array objec
   bookToggleRead.style.borderRadius = `5px`
   bookToggleRead.style.color = `rgb(34, 33, 33)`
   bookToggleRead.style.cursor = `pointer`
-  bookToggleRead.dataset.id = book.id
+  bookToggleRead.dataset.id = book.id // Links the books specific ID to its relevant button // 
   bookToggleRead.addEventListener("click", () => {
 
-    book.ToggleRead();
+    book.ToggleRead(); // Calls the previously defined ToggleRead() function //
   
-    renderLibrary();
+    renderLibrary(); // re-renders Library to allow for updated read status //
   
   });
 
@@ -112,7 +114,7 @@ myLibrary.forEach((book) => { // .forEach loop that goes through the array objec
   bookDelete.dataset.id = book.id;
   bookDelete.addEventListener("click", () => {
 
-    removeBook(book.id);
+    removeBook(book.id); 
   
   });
 
@@ -163,11 +165,11 @@ form.addEventListener("submit", (e) => { // Upon clicking the 'select button'
 
 
 const submitButton = document.getElementById("submit")
-const formReset = document.getElementById("form").reset();
+const formReset = document.getElementById("form").reset();  //  This resets the form upon exiting the form from the 'close' button //
 
 
  submitButton.addEventListener("click", () => {
-  formModal.classList.remove("open");
+  formModal.classList.remove("open"); // This exits the modal upon form submission //
   
 
  })
